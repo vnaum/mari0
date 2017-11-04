@@ -40,12 +40,6 @@ function love.load()
 	changescale(scale, fullscreen)
 	love.window.setTitle( "Mari0" )
 	
-	--version check
-	local loveversion = string.format("%02d.%02d.%02d", love._version_major, love._version_minor, love._version_revision)
-	if loveversion < "00.10.01" then
-		error("You have an outdated version of Love! Get 0.10.1 or higher and retry.")
-	end
-	
 	iconimg = love.graphics.newImage("graphics/icon.png")
 	love.window.setIcon(iconimg:getData())
 	
@@ -1053,7 +1047,7 @@ function defaultconfig()
 	controls[i]["down"] = {"s"}
 	controls[i]["up"] = {"w"}
 	controls[i]["run"] = {"lshift"}
-	controls[i]["jump"] = {"space"}
+	controls[i]["jump"] = {" "}
 	controls[i]["aimx"] = {""} --mouse aiming, so no need
 	controls[i]["aimy"] = {""}
 	controls[i]["portal1"] = {""}
@@ -1260,6 +1254,11 @@ function love.keyreleased(key, unicode)
 end
 
 function love.mousepressed(x, y, button)
+	if button == 'l' then
+		button = 1
+	elseif button == 'r' then
+		button = 2
+	end
 	if gamestate == "menu" or gamestate == "mappackmenu" or gamestate == "onlinemenu" or gamestate == "options" then
 		menu_mousepressed(x, y, button)
 	elseif gamestate == "game" then
